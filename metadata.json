@@ -1,0 +1,7 @@
+{
+  "name": "Global Explorer - Smart Travel Planner",
+  "description": "AI 기반 실시간 여행 계획 어플리케이션입니다. 구글 맵과 검색 기능을 활용하여 최적의 경로와 비용을 산출합니다.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
