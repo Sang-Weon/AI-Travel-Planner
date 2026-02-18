@@ -1,19 +1,24 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 8080;
+const distPath = path.join(__dirname, 'dist');
 
-// 빌드된 파일이 저장되는 dist 폴더를 지정합니다.
-app.use(express.static(path.join(__dirname, 'dist')));
+// dist 폴더 존재 여부 체크 (디버깅용)
+if (!fs.existsSync(distPath)) {
+  console.error("Critical Error: 'dist' folder not found. Ensure 'npm run build' was executed.");
+}
 
-// 모든 경로에서 index.html을 반환하도록 설정 (404 방지)
+app.use(express.static(distPath));
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is proactively listening on port ${PORT}`);
 });
